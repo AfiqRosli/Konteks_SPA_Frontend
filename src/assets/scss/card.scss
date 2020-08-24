@@ -1,0 +1,26 @@
+.card-topic {
+    cursor: pointer;
+    width: 100%;
+    height: 300px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 20px;
+}
+
+.card-topic:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.card-topic__button {
+    background-color: $dark-blue;
+    color: $light-blue;
+    border: none;
+    border-radius: 0 0 20px 20px;
+    font-size: 1.4em;
+}
+
+.card-topic__link,
+.card-topic__link:hover {
+    color: $light-blue;
+}

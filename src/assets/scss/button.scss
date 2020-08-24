@@ -1,0 +1,34 @@
+.btn {
+    color: $light-blue;
+    border-radius: 15px;
+}
+
+.btn:hover,
+.btn:active,
+.btn:focus {
+    color: $light-blue;
+}
+
+.btn-primary {
+    background-color: $blue;
+    border: 2px solid $blue;
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
+    background-color: $blue !important;
+    border: 2px solid $light-blue !important;
+}
+
+.btn-secondary {
+    background-color: $dark-blue;
+    border: 2px solid $blue;
+}
+
+.btn-secondary:hover,
+.btn-secondary:active,
+.btn-secondary:focus {
+    background-color: $blue !important;
+    border: 2px solid $light-blue !important;
+}

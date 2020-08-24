@@ -1,0 +1,19 @@
+.nav__ul {
+    list-style-type: none;
+}
+
+.nav__link {
+    color: $light-blue;
+}
+
+.nav__link:hover {
+    color: $white;
+}
+
+.nav__link:active {
+    color: $blue;
+}
+
+.nav__icon_color_white {
+    color: $white;
+}

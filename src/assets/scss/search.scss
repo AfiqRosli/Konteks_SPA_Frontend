@@ -1,0 +1,28 @@
+.search {
+    position: relative;
+}
+
+.search__input {
+    width: 100%;
+    max-width: 200px;
+    border-radius: 25px;
+    padding: 5px;
+    padding-left: 10px;
+}
+
+.search__input:focus {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    border-radius: 25px;
+    outline: none;
+}
+
+.search__icon {
+    cursor: pointer;
+    position: absolute;
+    right: 30px;
+    top: 8px;
+}
+
+.search__icon:hover {
+    color: $blue;
+}

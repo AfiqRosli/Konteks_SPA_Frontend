@@ -1,0 +1,35 @@
+.img_size_medium {
+    max-width: 80px;
+}
+
+.img_pointer {
+    cursor: pointer;
+}
+
+.lang__img_disabled {
+    position: relative;
+
+    img {
+        cursor: initial;
+    }
+}
+
+.lang__img_disabled::before {
+    content: "";
+    position: absolute;
+    background-color: black;
+    opacity: 0.5;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    left: 0;
+}
+
+.lang__img_disabled::after {
+    content: "Coming Soon";
+    position: absolute;
+    left: 0;
+    bottom: 20%;
+    color: $white;
+    text-align: center;
+}

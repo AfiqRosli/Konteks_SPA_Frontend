@@ -9,21 +9,24 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/js/all";
 import "./assets/scss/app.scss";
 
+import JQuery from "jquery";
+window.$ = JQuery;
+
 const requireComponent = require.context(
-    './components',
+    "./components",
     false,
     /Base[A-Z]\w+\.(vue|js)$/
-)
+);
 
-requireComponent.keys().forEach(fileName => {
-    const componentConfig = requireComponent(fileName)
+requireComponent.keys().forEach((fileName) => {
+    const componentConfig = requireComponent(fileName);
 
     const componentName = upperFirst(
-        camelCase(fileName.replace(/^\.\/(.*)\.\w+$/, '$1'))
-    )
+        camelCase(fileName.replace(/^\.\/(.*)\.\w+$/, "$1"))
+    );
 
-    Vue.component(componentName, componentConfig.default || componentConfig)
-})
+    Vue.component(componentName, componentConfig.default || componentConfig);
+});
 
 Vue.config.productionTip = false;
 

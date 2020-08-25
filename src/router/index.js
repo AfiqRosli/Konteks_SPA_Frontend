@@ -7,7 +7,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
-import Dashboard from '../views/Dashboard.vue'
+import Topic from '../views/Topic.vue'
 
 Vue.use(VueRouter)
 
@@ -22,9 +22,9 @@ const routes = [{
     component: About
   },
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: Dashboard
+    path: '/topic',
+    name: 'Topic',
+    component: Topic
   }
 ]
 

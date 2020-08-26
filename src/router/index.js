@@ -13,12 +13,18 @@ Vue.use(VueRouter)
 const routes = [{
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+      title: 'Learn Languages'
+    }
   },
   {
     path: '/topic',
     name: 'Topic',
-    component: Topic
+    component: Topic,
+    meta: {
+      title: 'Start a Topic'
+    }
   }
 ]
 
@@ -27,5 +33,13 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+const DEFAULT_TITLE = 'Konteks'
+
+router.afterEach((to, from) => {
+  Vue.nextTick(() => {
+    document.title = to.meta.title || DEFAULT_TITLE;
+  });
+});
 
 export default router

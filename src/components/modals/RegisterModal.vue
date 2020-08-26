@@ -1,13 +1,13 @@
 <template>
     <base-modal id="registerModal" title="Register">
         <template v-slot:body>
-            <form @submit.prevent="register">
+            <form @submit.prevent="createProfile">
                 <div class="form-group">
                     <input
                         type="text"
                         class="form-control"
                         placeholder="Name (optional)"
-                        v-model="name"
+                        v-model="form.name"
                     />
                 </div>
                 <div class="form-group">
@@ -15,7 +15,7 @@
                         type="text"
                         class="form-control"
                         placeholder="Email"
-                        v-model="email"
+                        v-model="form.email"
                     />
                 </div>
                 <div class="form-group">
@@ -23,7 +23,7 @@
                         type="password"
                         class="form-control"
                         placeholder="Password"
-                        v-model="password"
+                        v-model="form.password"
                     />
                 </div>
 
@@ -47,8 +47,10 @@
 </template>
 
 <script>
-import BaseModal from "@/components/modals/BaseModal";
-let debounce = require("lodash/debounce");
+import BaseModal from '@/components/modals/BaseModal'
+import { mapActions } from 'vuex'
+
+let debounce = require('lodash/debounce')
 
 export default {
     components: {
@@ -56,45 +58,29 @@ export default {
     },
     data() {
         return {
-            name: "",
-            email: "",
-            password: "",
-        };
+            form: {
+                name: '',
+                email: '',
+                password: '',
+            },
+        }
     },
     methods: {
+        ...mapActions('auth', ['register']),
         openLoginModal: debounce(() => {
-            $("#loginModal").modal("show");
+            $('#loginModal').modal('show')
         }, 650),
         changeToLoginModal() {
-            $("#registerModal").modal("hide");
-            this.openLoginModal();
+            $('#registerModal').modal('hide')
+            this.openLoginModal()
         },
-        register() {
-            let userData = {
-                name: this.name,
-                email: this.email,
-                password: this.password,
-            };
-
-            this.$store
-                .dispatch("user/register", userData)
-                .then((user) => {
-                    this.$store
-                        .dispatch("user/login", {
-                            email: this.email,
-                            password: this.password,
-                        })
-                        .then(() => {
-                            $("#registerModal").modal("hide");
-                            this.$router.push({ name: "Topic" });
-                        });
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
+        async createProfile() {
+            await this.register(this.form)
+            $('#registerModal').modal('hide')
+            this.$router.replace({ name: 'Topic' })
         },
     },
-};
+}
 </script>
 
 <style lang="scss" scoped></style>

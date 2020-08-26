@@ -1,14 +1,14 @@
 <template>
     <base-modal id="loginModal" title="Sign In">
         <template v-slot:body>
-            <form action="http://127.0.0.1:8000/login" method="POST">
+            <form @submit.prevent="login" method="POST">
                 <div class="form-group">
                     <input
                         type="text"
                         class="form-control"
                         placeholder="Email"
                         name="email"
-                        v-model="email"
+                        v-model="form.email"
                     />
                 </div>
                 <div class="form-group">
@@ -17,7 +17,7 @@
                         class="form-control"
                         placeholder="Password"
                         name="password"
-                        v-model="password"
+                        v-model="form.password"
                     />
                 </div>
 
@@ -57,18 +57,25 @@ export default {
     },
     data() {
         return {
-            email: "",
-            password: "",
+            form: {
+                email: "",
+                password: "",
+            },
         };
     },
     methods: {
-        ...mapActions("user", ["login"]),
+        ...mapActions("auth", ["signIn"]),
         openRegisterModal: debounce(() => {
             $("#registerModal").modal("show");
         }, 650),
         changeToRegisterModal() {
             $("#loginModal").modal("hide");
             this.openRegisterModal();
+        },
+        async login() {
+            await this.signIn(this.form);
+            $("#loginModal").modal("hide");
+            this.$router.replace({ name: "Topic" });
         },
     },
 };

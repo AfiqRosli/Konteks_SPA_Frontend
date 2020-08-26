@@ -42,7 +42,7 @@
                     </ul>
                 </nav>
                 <div>
-                    <template v-if="false">
+                    <template v-if="authenticated">
                         <button
                             class="btn btn-secondary mb-4 mr-3 mb-md-0"
                             @click="logout"
@@ -95,7 +95,7 @@
                     </ul>
                 </nav>
                 <div>
-                    <template v-if="false">
+                    <template v-if="authenticated">
                         <button
                             class="btn btn-secondary mb-4 mr-3 mb-md-0"
                             @click="logout"
@@ -124,6 +124,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
     data() {
         return {
@@ -131,7 +133,12 @@ export default {
             windowWidth: window.innerWidth,
         };
     },
-    computed: {},
+    computed: {
+        ...mapGetters({
+            authenticated: "auth/authenticated",
+            user: "auth/user",
+        }),
+    },
     watch: {
         windowWidth() {
             if (this.windowWidth > 767) {
@@ -149,6 +156,9 @@ export default {
         window.removeEventListener("resize", this.onResize);
     },
     methods: {
+        ...mapActions({
+            signOutAction: "auth/signOut",
+        }),
         onResize() {
             this.windowWidth = window.innerWidth;
         },
@@ -174,6 +184,10 @@ export default {
 
                 this.showMenu = true;
             }
+        },
+        async logout() {
+            await this.signOutAction();
+            this.$router.replace({ name: "Home" });
         },
     },
 };

@@ -10,78 +10,24 @@
                     type="text"
                     placeholder="Search topics..."
                 />
-                <span class="search__icon"><i class="fas fa-search"></i></span>
+                <span class="search__icon">
+                    <i class="fas fa-search"></i>
+                </span>
             </div>
         </div>
 
         <div class="row">
             <div
+                v-for="topic in topics"
+                :key="topic.id"
                 class="col-12 col-sm-6 col-lg-3 mb-4 d-flex justify-content-center"
             >
                 <div
                     class="card-topic d-flex align-items-end"
-                    :style="{
-                        'background-image':
-                            'url(' +
-                            require('@/assets/img/topic/myself.jpg') +
-                            ')',
-                    }"
+                    :style="inlineBgImage(topic.src)"
                 >
                     <div class="card-topic__button py-3 text-center w-100">
-                        <a href="" class="card-topic__link">
-                            Myself
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div
-                class="col-12 col-sm-6 col-lg-3 mb-4 d-flex justify-content-center"
-            >
-                <div
-                    class="card-topic d-flex align-items-end"
-                    :style="{
-                        'background-image':
-                            'url(' +
-                            require('@/assets/img/topic/hobbies.jpg') +
-                            ')',
-                    }"
-                >
-                    <div class="card-topic__button py-3 text-center w-100">
-                        Hobbies
-                    </div>
-                </div>
-            </div>
-            <div
-                class="col-12 col-sm-6 col-lg-3 mb-4 d-flex justify-content-center"
-            >
-                <div
-                    class="card-topic d-flex align-items-end"
-                    :style="{
-                        'background-image':
-                            'url(' +
-                            require('@/assets/img/topic/travelling.jpg') +
-                            ')',
-                    }"
-                >
-                    <div class="card-topic__button py-3 text-center w-100">
-                        Travelling
-                    </div>
-                </div>
-            </div>
-            <div
-                class="col-12 col-sm-6 col-lg-3 mb-4 d-flex justify-content-center"
-            >
-                <div
-                    class="card-topic d-flex align-items-end"
-                    :style="{
-                        'background-image':
-                            'url(' +
-                            require('@/assets/img/topic/food_drink.jpg') +
-                            ')',
-                    }"
-                >
-                    <div class="card-topic__button py-3 text-center w-100">
-                        Food &amp; Drinks
+                        <a href class="card-topic__link">{{ topic.title }}</a>
                     </div>
                 </div>
             </div>
@@ -90,7 +36,30 @@
 </template>
 
 <script>
-export default {};
+import { mapState } from 'vuex'
+
+export default {
+    computed: {
+        ...mapState('topic', ['topics']),
+    },
+    created() {
+        this.$store.dispatch('topic/fetchTopics')
+    },
+    methods: {
+        inlineBgImage(src) {
+            let fileExt = src.substring(src.lastIndexOf('.'))
+
+            src = src.replace('/img/', '')
+            src = src.replace(fileExt, '')
+
+            let bgImage = require('@/assets/img/' + src + fileExt)
+
+            return {
+                backgroundImage: `url("${bgImage}")`,
+            }
+        },
+    },
+}
 </script>
 
 <style lang="scss" scoped></style>

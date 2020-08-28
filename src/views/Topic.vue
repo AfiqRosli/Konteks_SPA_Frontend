@@ -27,7 +27,9 @@
                     :style="inlineBgImage(topic.src)"
                 >
                     <div class="card-topic__button py-3 text-center w-100">
-                        <a href class="card-topic__link">{{ topic.title }}</a>
+                        <a href class="card-topic__link">{{
+                            capitalizePhrase(topic.title)
+                        }}</a>
                     </div>
                 </div>
             </div>
@@ -36,6 +38,7 @@
 </template>
 
 <script>
+import helper from '@/mixins/helper.js'
 import { mapState } from 'vuex'
 
 export default {
@@ -59,6 +62,7 @@ export default {
             }
         },
     },
+    mixins: [helper],
 }
 </script>
 

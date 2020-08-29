@@ -46,10 +46,10 @@
 </template>
 
 <script>
-import BaseModal from "@/components/modals/BaseModal";
+import BaseModal from '@/components/modals/BaseModal'
 
-import { mapActions } from "vuex";
-let debounce = require("lodash/debounce");
+import { mapActions } from 'vuex'
+let debounce = require('lodash/debounce')
 
 export default {
     components: {
@@ -58,27 +58,27 @@ export default {
     data() {
         return {
             form: {
-                email: "",
-                password: "",
+                email: '',
+                password: '',
             },
-        };
+        }
     },
     methods: {
-        ...mapActions("auth", ["signIn"]),
+        ...mapActions('auth', ['signIn']),
         openRegisterModal: debounce(() => {
-            $("#registerModal").modal("show");
+            $('#registerModal').modal('show')
         }, 650),
         changeToRegisterModal() {
-            $("#loginModal").modal("hide");
-            this.openRegisterModal();
+            $('#loginModal').modal('hide')
+            this.openRegisterModal()
         },
         async login() {
-            await this.signIn(this.form);
-            $("#loginModal").modal("hide");
-            this.$router.replace({ name: "Topic" });
+            await this.signIn(this.form)
+            $('#loginModal').modal('hide')
+            this.$router.replace({ name: 'TopicIndex' })
         },
     },
-};
+}
 </script>
 
 <style lang="scss" scoped></style>

@@ -82,7 +82,7 @@ export default {
             })
         },
         learnLanguage() {
-            this.$router.push({ name: 'Topic' })
+            this.$router.push({ name: 'TopicIndex' })
         },
     },
 }

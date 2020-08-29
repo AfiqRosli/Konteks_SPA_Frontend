@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="header-height_mt-5 row mb-5">
-            <div class="col-12 col-sm-6">
+            <div class="col-12 col-sm">
                 <h1>I want to talk about</h1>
             </div>
-            <div class="search col-12 col-sm-6 text-right">
+            <div class="search col-12 col-md-4 text-right">
                 <input
                     class="search__input"
                     type="text"
@@ -20,7 +20,7 @@
             <div
                 v-for="topic in topics"
                 :key="topic.id"
-                class="col-12 col-sm-6 col-lg-3 mb-4 d-flex justify-content-center"
+                class="col-12 col-sm-6 col-md-4 col-lg-3 p-4 d-flex justify-content-center"
             >
                 <div
                     class="card-topic d-flex align-items-end"

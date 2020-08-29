@@ -8,7 +8,8 @@ import VueRouter from 'vue-router'
 import store from "@/store/index.js";
 
 import Home from '../views/Home.vue'
-import Topic from '../views/Topic.vue'
+import TopicIndex from '../views/Topic/Index.vue'
+import TopicShow from '../views/Topic/Show.vue'
 
 Vue.use(VueRouter)
 
@@ -22,13 +23,22 @@ const routes = [{
   },
   {
     path: '/topic',
-    name: 'Topic',
-    component: Topic,
+    name: 'TopicIndex',
+    component: TopicIndex,
     meta: {
       title: 'Start a Topic',
       requiresAuth: true,
     },
   },
+  {
+    path: '/topic/:topic',
+    name: 'TopicShow',
+    component: TopicShow,
+    meta: {
+      title: 'Learning by Guessing',
+      requiresAuth: true,
+    },
+  }
 ]
 
 const router = new VueRouter({

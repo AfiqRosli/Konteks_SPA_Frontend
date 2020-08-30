@@ -31,13 +31,14 @@ const routes = [{
     },
   },
   {
-    path: '/topic/:topic',
+    path: '/topic/:id',
     name: 'TopicShow',
     component: TopicShow,
     meta: {
       title: 'Learning by Guessing',
       requiresAuth: true,
     },
+    props: true
   }
 ]
 

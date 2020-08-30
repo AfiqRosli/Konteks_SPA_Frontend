@@ -21,15 +21,22 @@
                 v-for="topic in topics"
                 :key="topic.id"
                 class="col-12 col-sm-6 col-md-4 col-lg-3 p-4 d-flex justify-content-center"
+                @click="showTopic(topic.id)"
             >
                 <div
                     class="card-topic d-flex align-items-end"
                     :style="inlineBgImage(topic.src)"
                 >
                     <div class="card-topic__button py-3 text-center w-100">
-                        <a href class="card-topic__link">{{
-                            capitalizePhrase(topic.title)
-                        }}</a>
+                        <router-link
+                            class="card-topic__link"
+                            :to="{
+                                name: 'TopicShow',
+                                params: { id: topic.id },
+                            }"
+                        >
+                            {{ capitalizePhrase(topic.title) }}
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -59,6 +66,14 @@ export default {
 
             return {
                 backgroundImage: `url("${bgImage}")`,
+            }
+        },
+        showTopic(topicId) {
+            if (this.$router.currentRoute.name == 'TopicIndex') {
+                this.$router.push({
+                    name: 'TopicShow',
+                    params: { id: topicId },
+                })
             }
         },
     },

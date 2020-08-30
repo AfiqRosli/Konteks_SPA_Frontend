@@ -4,12 +4,16 @@ export const namespaced = true
 
 export const state = {
     topics: [],
+    topic: null,
     // topicsTotal: 0,
 }
 
 export const mutations = {
     SET_TOPICS(state, topics) {
         state.topics = topics
+    },
+    SET_TOPIC(state, topic) {
+        state.topic = topic
     },
     // SET_TOPICS_TOTAL(state, topicsTotal) {
     //     state.topicsTotal = topicsTotal
@@ -24,6 +28,14 @@ export const actions = {
             commit('SET_TOPICS', res.data)
         } catch (err) {
             console.error(err)
+        }
+    },
+    async fetchTopic({ commit }, id) {
+        try {
+            let res = await TopicService.getTopic(id)
+            commit('SET_TOPIC', res.data)
+        } catch (err) {
+            console.log(err)
         }
     },
 }

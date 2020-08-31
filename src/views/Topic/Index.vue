@@ -24,7 +24,7 @@
                 @click="showTopic(topic.id)"
             >
                 <div
-                    class="card-topic d-flex align-items-end"
+                    class="card-topic card__background-img d-flex align-items-end"
                     :style="inlineBgImage(topic.src)"
                 >
                     <div class="card-topic__button py-3 text-center w-100">

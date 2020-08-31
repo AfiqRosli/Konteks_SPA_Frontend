@@ -2,10 +2,6 @@
     cursor: pointer;
     width: 100%;
     height: 300px;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    border-radius: 20px;
 }
 
 .card-topic:hover {
@@ -23,4 +19,22 @@
 .card-topic__link,
 .card-topic__link:hover {
     color: $light-blue;
+}
+
+.card__background-img {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 20px;
+}
+
+.card-topic-info {
+    width: 100%;
+    height: 300px;
+    background-color: $light-blue;
+    border-radius: 20px;
+}
+
+.card-topic-info__background-img {
+    border-radius: 20px 0 0 20px;
 }

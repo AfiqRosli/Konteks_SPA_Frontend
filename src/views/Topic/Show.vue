@@ -1,8 +1,8 @@
 <template>
     <div class="mt-5 pt-3">
-        <div v-if="this.topic" class="card-topic-info mt-5">
+        <div v-if="this.topic" class="card-topic-info my-5">
             <div class="row h-100">
-                <div class="col-3">
+                <div class="col-5 col-sm-3">
                     <div
                         class="card__background-img card-topic-info__background-img w-100 h-100"
                         :style="inlineBgImage(topic.src)"
@@ -17,6 +17,21 @@
                 </div>
             </div>
         </div>
+
+        <div
+            class="d-flex flex-wrap justify-content-center justify-content-md-between"
+        >
+            <div
+                class="lesson mb-5 mr-3 shadow position-relative d-flex justify-content-center align-items-center"
+                v-for="lesson in lessons"
+                :key="lesson.id"
+            >
+                <p class="lesson__opening position-absolute">
+                    {{ lesson.opening }}
+                </p>
+                <h3 class="m-0">{{ lesson.title }}</h3>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -28,6 +43,7 @@ export default {
     props: ['id'],
     computed: {
         ...mapState('topic', ['topic']),
+        ...mapState('lesson', ['lessons']),
     },
     created() {
         this.$store.dispatch('topic/fetchTopic', this.id)

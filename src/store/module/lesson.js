@@ -15,9 +15,8 @@ export const mutations = {
 export const actions = {
     async fetchLessons({ commit }, topic_id) {
         try {
-            let lessons = await LessonService.getTopicLessons(topic_id)
-            console.log(lessons)
-            commit('SET_LESSONS', lessons)
+            let res = await LessonService.getTopicLessons(topic_id)
+            commit('SET_LESSONS', res.data)
         } catch (err) {
             console.log(err)
         }

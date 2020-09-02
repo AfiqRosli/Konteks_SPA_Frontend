@@ -31,6 +31,7 @@ export default {
     },
     created() {
         this.$store.dispatch('topic/fetchTopic', this.id)
+        this.$store.dispatch('lesson/fetchLessons', this.id)
     },
     methods: {
         inlineBgImage(src) {

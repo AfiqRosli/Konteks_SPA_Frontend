@@ -5,13 +5,13 @@
             class="container-lg d-flex flex-column flex-md-row justify-content-md-between align-items-md-center text-center text-md-left"
         >
             <div class="d-flex justify-content-between">
-                <a href="/">
+                <router-link to="/">
                     <img
                         class="header-logo py-2 layer_top"
                         src="@/assets/img/logo/konteks-transparent.png"
                         alt="Konteks Logo"
                     />
-                </a>
+                </router-link>
                 <span
                     @click="toggleMenu"
                     class="nav__icon_color_white d-inline-block d-md-none d-flex align-items-center layer_top"
@@ -124,73 +124,73 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     data() {
         return {
             showMenu: false,
             windowWidth: window.innerWidth,
-        };
+        }
     },
     computed: {
         ...mapGetters({
-            authenticated: "auth/authenticated",
-            user: "auth/user",
+            authenticated: 'auth/authenticated',
+            user: 'auth/user',
         }),
     },
     watch: {
         windowWidth() {
             if (this.windowWidth > 767) {
-                this.$refs.navHeader.style.height = "60px";
-                this.showMenu = false;
+                this.$refs.navHeader.style.height = '60px'
+                this.showMenu = false
             }
         },
     },
     mounted() {
         this.$nextTick(() => {
-            window.addEventListener("resize", this.onResize);
-        });
+            window.addEventListener('resize', this.onResize)
+        })
     },
     beforeDestroy() {
-        window.removeEventListener("resize", this.onResize);
+        window.removeEventListener('resize', this.onResize)
     },
     methods: {
         ...mapActions({
-            signOutAction: "auth/signOut",
+            signOutAction: 'auth/signOut',
         }),
         onResize() {
-            this.windowWidth = window.innerWidth;
+            this.windowWidth = window.innerWidth
         },
         openLoginModal() {
             this.$nextTick(() => {
-                $("#loginModal").modal("show");
-            });
+                $('#loginModal').modal('show')
+            })
         },
         openRegisterModal() {
             this.$nextTick(() => {
-                $("#registerModal").modal("show");
-            });
+                $('#registerModal').modal('show')
+            })
         },
         toggleMenu() {
             if (this.showMenu) {
-                this.$refs.navHeader.style.height = "60px";
-                this.$refs.navMenuMobile.style.top = "-500px";
+                this.$refs.navHeader.style.height = '60px'
+                this.$refs.navMenuMobile.style.top = '-500px'
 
-                this.showMenu = false;
+                this.showMenu = false
             } else {
-                this.$refs.navHeader.style.height = "260px";
-                this.$refs.navMenuMobile.style.top = "55px";
+                this.$refs.navHeader.style.height = '260px'
+                this.$refs.navMenuMobile.style.top = '55px'
 
-                this.showMenu = true;
+                this.showMenu = true
             }
         },
         async logout() {
-            await this.signOutAction();
-            this.$router.replace({ name: "Home" });
+            await this.signOutAction()
+            this.$router.replace({ name: 'Home' })
         },
     },
-};
+}
 </script>
 
 <style lang="scss" scoped></style>

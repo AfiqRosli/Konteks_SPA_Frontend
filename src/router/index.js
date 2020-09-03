@@ -32,7 +32,7 @@ const routes = [
         },
     },
     {
-        path: '/topic',
+        path: '/topics',
         name: 'TopicIndex',
         component: TopicIndex,
         meta: {
@@ -41,7 +41,7 @@ const routes = [
         },
     },
     {
-        path: '/topic/:id',
+        path: '/topics/:id',
         name: 'TopicShow',
         component: TopicShow,
         meta: {

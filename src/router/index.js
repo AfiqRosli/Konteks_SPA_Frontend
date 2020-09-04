@@ -10,6 +10,7 @@ import store from '@/store/index.js'
 import Home from '../views/Home.vue'
 import TopicIndex from '../views/Topic/Index.vue'
 import TopicShow from '../views/Topic/Show.vue'
+import LessonIndex from '../views/Lesson/Index.vue'
 
 Vue.use(VueRouter)
 
@@ -44,6 +45,16 @@ const routes = [
         path: '/topics/:id',
         name: 'TopicShow',
         component: TopicShow,
+        meta: {
+            title: "Topic's Lessons",
+            requiresAuth: true,
+        },
+        props: true,
+    },
+    {
+        path: '/lessons/:id',
+        name: 'LessonIndex',
+        component: LessonIndex,
         meta: {
             title: 'Learning by Guessing',
             requiresAuth: true,

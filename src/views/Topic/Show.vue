@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-5 pt-3">
+    <div class="header-height_mt-5">
         <div v-if="this.topic" class="card-topic-info my-5">
             <div class="row h-100">
                 <div class="col-5 col-sm-3">
@@ -25,6 +25,7 @@
                 class="lesson mb-5 mr-3 shadow position-relative d-flex justify-content-center align-items-center"
                 v-for="lesson in lessons"
                 :key="lesson.id"
+                @click="showLessonContents(lesson.id)"
             >
                 <p class="lesson__opening position-absolute">
                     {{ lesson.opening }}
@@ -61,6 +62,12 @@ export default {
             return {
                 backgroundImage: `url("${bgImage}")`,
             }
+        },
+        showLessonContents(lesson_id) {
+            this.$router.push({
+                name: 'LessonIndex',
+                params: { id: lesson_id },
+            })
         },
     },
     mixins: [helper],

@@ -10,3 +10,72 @@
     top: 10px;
     left: 10px;
 }
+
+.lesson-content__translation {
+    color: $dark-grey;
+}
+
+.lesson-content__speech {
+    background-color: $grey;
+    border-radius: 20px;
+}
+
+.lesson-content__input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid $blue;
+}
+
+.lesson-content__input:focus {
+    outline: none;
+}
+
+@media (max-width: 575.98px) {
+    .lesson-content__speech::before {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        width: 0;
+        height: 0;
+        border-bottom: 20px solid transparent;
+    }
+
+    .lesson-content__speech_left::before {
+        left: 25px;
+        border-left: 20px solid $grey;
+    }
+
+    .lesson-content__speech_right::before {
+        right: 25px;
+        border-right: 20px solid $grey;
+    }
+}
+
+@media (min-width: 576px) {
+    .lesson-content__speech::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        width: 0;
+        height: 0;
+        border-bottom: 20px solid transparent;
+    }
+
+    .lesson-content__speech_left {
+        border-radius: 0 20px 20px 20px;
+    }
+
+    .lesson-content__speech_left::before {
+        left: 0;
+        border-right: 20px solid $grey;
+    }
+
+    .lesson-content__speech_right {
+        border-radius: 20px 0 20px 20px;
+    }
+
+    .lesson-content__speech_right::before {
+        right: 0;
+        border-left: 20px solid $grey;
+    }
+}

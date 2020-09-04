@@ -16,7 +16,6 @@ export const actions = {
     async fetchLessonContents({ commit }, lesson) {
         try {
             let res = await LessonContentService.getLessonContents(lesson)
-            console.log(res.data)
             commit('SET_LESSON_CONTENTS', res.data)
         } catch (err) {
             console.log(err)

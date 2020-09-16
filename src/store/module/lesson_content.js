@@ -23,4 +23,10 @@ export const actions = {
     },
 }
 
-export const getters = {}
+export const getters = {
+    getLessonContentsReqInput: state => {
+        return state.lesson_contents.filter(content => {
+            return content.user_input
+        })
+    },
+}

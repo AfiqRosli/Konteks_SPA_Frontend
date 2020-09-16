@@ -71,7 +71,7 @@
             </div>
         </div>
 
-        <div class="row mb-5">
+        <div v-if="lesson_contents.length > 0" class="row mb-5">
             <div class="col-8 offset-2 text-right">
                 <button class="btn btn-primary" @click="checkSimilarity">
                     SUBMIT
@@ -104,6 +104,7 @@ export default {
     created() {
         this.fetchLesson(this.id)
         this.fetchLessonContents(this.id)
+        console.log(this.lesson_contents)
     },
     methods: {
         ...mapActions('topic', ['fetchTopic']),

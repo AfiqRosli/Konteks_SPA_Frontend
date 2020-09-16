@@ -104,7 +104,6 @@ export default {
     created() {
         this.fetchLesson(this.id)
         this.fetchLessonContents(this.id)
-        console.log(this.lesson_contents)
     },
     methods: {
         ...mapActions('topic', ['fetchTopic']),

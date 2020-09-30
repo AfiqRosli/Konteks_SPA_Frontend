@@ -51,14 +51,18 @@
                             {{ lesson_content.says_translation }}
                         </p>
 
-                        <input
-                            v-else
-                            class="lesson-content__input w-100"
-                            type="text"
-                            :name="lesson_content.order"
-                            placeholder="Guess the phrase"
-                            autocomplete="off"
-                        />
+                        <div v-else class="position-relative">
+                            <input
+                                class="lesson-content__input w-100"
+                                type="text"
+                                :name="lesson_content.order"
+                                placeholder="Guess the phrase"
+                                autocomplete="off"
+                            />
+                            <CorrectnessIndicator
+                                :ref="'CI' + lesson_content.id"
+                            ></CorrectnessIndicator>
+                        </div>
                     </div>
                 </div>
                 <div
@@ -82,12 +86,20 @@
 </template>
 
 <script>
+import RadialProgressBar from 'vue-radial-progress'
+
 import { Corpus, Similarity } from 'tiny-tfidf'
 import { mapState, mapActions, mapGetters } from 'vuex'
 import helper from '@/mixins/helper'
 
+import CorrectnessIndicator from '@/components/CorrectnessIndicator'
+
 export default {
     props: ['id'],
+    components: {
+        RadialProgressBar,
+        CorrectnessIndicator,
+    },
     computed: {
         ...mapState('topic', ['topic']),
         ...mapState('lesson', ['lesson']),
@@ -109,6 +121,12 @@ export default {
         ...mapActions('topic', ['fetchTopic']),
         ...mapActions('lesson', ['fetchLesson']),
         ...mapActions('lesson_content', ['fetchLessonContents']),
+        progress(event, progress, stepValue) {
+            console.log(stepValue)
+        },
+        progress_end(event) {
+            console.log('Circle progress end')
+        },
         speechStyling(reqUserInput) {
             return {
                 'lesson-content__speech_left': !reqUserInput,
@@ -124,8 +142,10 @@ export default {
             let saysTranslations = []
             let docs = []
 
-            userInputElements.forEach(input => {
-                userInputs.push(input.value)
+            userInputElements.forEach(inputEl => {
+                let input = inputEl.value
+                this.checkSynonyms(input)
+                userInputs.push(input)
             })
 
             this.getLessonContentsReqInput.forEach(content => {
@@ -150,6 +170,11 @@ export default {
                     )
                 )
             }
+
+            console.log(this.$refs['CI9'])
+        },
+        checkSynonyms(input) {
+            console.log(input)
         },
     },
     mixins: [helper],

@@ -142,15 +142,21 @@ export default {
             let saysTranslations = []
             let docs = []
 
-            userInputElements.forEach(inputEl => {
-                let input = inputEl.value
-                this.checkSynonyms(input)
-                userInputs.push(input)
-            })
+            let content = this.getLessonContentsReqInput
+            for (let i = 0; i < content.length; i++) {
+                if (content[i].synonyms) {
+                    let synonyms = JSON.parse(content[i].synonyms)
+                    let revisedInput = this.convertSynonyms(
+                        userInputElements[i].value.toLowerCase(),
+                        synonyms
+                    )
 
-            this.getLessonContentsReqInput.forEach(content => {
-                saysTranslations.push(content.says_translation)
-            })
+                    userInputs.push(revisedInput)
+                } else {
+                    userInputs.push(userInputElements[i].value)
+                }
+                saysTranslations.push(content[i].says_translation)
+            }
 
             // userInputs & saysTranslations doc should be of equal length
             for (let i = 1; i <= userInputs.length; i++) {
@@ -171,10 +177,22 @@ export default {
                 )
             }
 
-            console.log(this.$refs['CI9'])
+            // console.log(this.$refs['CI9'])
         },
-        checkSynonyms(input) {
-            console.log(input)
+        convertSynonyms(input, synonyms) {
+            let keys = Object.keys(synonyms)
+
+            for (let i = 0; i < keys.length; i++) {
+                let values = synonyms[keys[i]]
+                for (let j = 0; j < values.length; j++) {
+                    if (input.includes(values[j])) {
+                        input = input.replaceAll(values[j], keys[i])
+                        break
+                    }
+                }
+            }
+
+            return input
         },
     },
     mixins: [helper],

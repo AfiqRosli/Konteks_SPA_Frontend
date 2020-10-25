@@ -77,7 +77,7 @@ export default {
         async createProfile() {
             await this.register(this.form)
             $('#registerModal').modal('hide')
-            this.$router.replace({ name: 'Topic' })
+            this.$router.replace({ name: 'TopicIndex' })
         },
     },
 }

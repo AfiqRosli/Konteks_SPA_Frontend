@@ -6,5 +6,5 @@ export default {
     },
     getTopic(id) {
         return apiClient.get('/topics/' + id)
-    }
+    },
 }

@@ -60,6 +60,7 @@
                                 autocomplete="off"
                             />
                             <CorrectnessIndicator
+                                :lessonContentId="lesson_content.id"
                                 :ref="'CI' + lesson_content.id"
                             ></CorrectnessIndicator>
                         </div>
@@ -87,12 +88,21 @@
 
 <script>
 import RadialProgressBar from 'vue-radial-progress'
-
-import { Corpus, Similarity } from 'tiny-tfidf'
+import {
+    abs,
+    sum,
+    sqrt,
+    multiply,
+    divide,
+    dotDivide,
+    dotMultiply,
+} from 'mathjs'
 import { mapState, mapActions, mapGetters } from 'vuex'
 import helper from '@/mixins/helper'
 
 import CorrectnessIndicator from '@/components/CorrectnessIndicator'
+
+let unionBy = require('lodash.unionby')
 
 export default {
     props: ['id'],
@@ -140,7 +150,7 @@ export default {
 
             let userInputs = []
             let saysTranslations = []
-            let docs = []
+            let similarityResults = []
 
             let content = this.getLessonContentsReqInput
             for (let i = 0; i < content.length; i++) {
@@ -155,27 +165,16 @@ export default {
                 } else {
                     userInputs.push(userInputElements[i].value)
                 }
-                saysTranslations.push(content[i].says_translation)
+                saysTranslations.push(content[i].says_translation.toLowerCase())
             }
 
-            // userInputs & saysTranslations doc should be of equal length
-            for (let i = 1; i <= userInputs.length; i++) {
-                docs.push(`d${i}`)
-            }
-
-            // d1: document 1 etc.
-            // TODO: Test user input with all documents and get the highest similarity
-            const userCorpus = new Corpus(docs, userInputs)
-            const answerCorpus = new Corpus(docs, saysTranslations)
-
-            for (let i = 1; i <= userCorpus._documents.size; i++) {
-                console.log(
-                    Similarity.cosineSimilarity(
-                        userCorpus.getDocumentVector(`d${i}`),
-                        answerCorpus.getDocumentVector(`d${i}`)
-                    )
+            for (let i = 0; i < saysTranslations.length; i++) {
+                similarityResults.push(
+                    this.cosineSimilarity(saysTranslations[i], userInputs[i])
                 )
             }
+
+            console.log(similarityResults)
 
             // console.log(this.$refs['CI9'])
         },
@@ -193,6 +192,73 @@ export default {
             }
 
             return input
+        },
+        getUniqueWords(input, preDefined) {
+            let inputArr = this.splitToArr(input)
+            let preDefinedArr = this.splitToArr(preDefined)
+
+            return unionBy(inputArr, preDefinedArr)
+        },
+        generateWordCountVector(uniqueWords, sentence) {
+            let sentenceArr = this.splitToArr(sentence)
+            let wordCountVector = []
+
+            uniqueWords.forEach(uniqueWord => {
+                let matched = 0
+                sentenceArr.forEach(word => {
+                    if (word == uniqueWord) {
+                        matched++
+                    }
+                })
+
+                wordCountVector.push(matched)
+            })
+
+            return wordCountVector
+        },
+        splitToArr(input) {
+            // Code adapted from
+            // Greg, 23rd Dec 2008; https://stackoverflow.com/questions/388996/regex-for-javascript-to-allow-only-alphanumeric
+            // BalusC, 30th Dec 2009; https://stackoverflow.com/questions/1981349/regex-to-replace-multiple-spaces-with-a-single-space
+            // Niet the Dark Absol, 14th Mar 2012; https://stackoverflow.com/questions/9705194/replace-special-characters-in-a-string-with-underscore/9705227
+            return input
+                .replace(/[^a-z0-9 ]/gi, '')
+                .replace(/\s\s+/, ' ')
+                .split(' ')
+            // End of adapted code
+        },
+        cosineSimilarity(translation, userAns) {
+            let uniqueWords = this.getUniqueWords(translation, userAns)
+            let translationWordCountVector = this.generateWordCountVector(
+                uniqueWords,
+                translation
+            )
+            let userAnsWordCountVector = this.generateWordCountVector(
+                uniqueWords,
+                userAns
+            )
+
+            let dotProduct = dotMultiply(
+                translationWordCountVector,
+                userAnsWordCountVector
+            )
+            let dividend = sum(dotProduct)
+            let magnitudeTranslation = sqrt(
+                sum(
+                    dotMultiply(
+                        translationWordCountVector,
+                        translationWordCountVector
+                    )
+                )
+            )
+            let magnitudeuserAns = sqrt(
+                sum(dotMultiply(userAnsWordCountVector, userAnsWordCountVector))
+            )
+            let divisor = multiply(magnitudeTranslation, magnitudeuserAns)
+
+            let cosineSimilarity = divide(dividend, divisor)
+
+            return cosineSimilarity
         },
     },
     mixins: [helper],
